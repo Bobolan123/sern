@@ -37,16 +37,14 @@ const registerNewUser = async (rawUserData) => {
         }
     }
     let isPhoneExist = await checkPhoneExist(rawUserData.phone)
-    if (isphoneExist) {
+    if (isPhoneExist) {
         return {
             EM: 'Phone already exist',
             EC: 1
         }
     }
-
     //hash password
     let hashPassword = hashUserPassword(rawUserData.password)
-
     //create new user
     await db.User.create({
         email:rawUserData.email,
