@@ -10,7 +10,6 @@ const readFunc = async (req,res) => {
                 EC: data.EC,//error code
                 DT: data.DT
             })
-            console.log("check data: ", 'page = ', page,'limit = ', limit)
         } else {
             let data = await userIpiService.getAllUser()
             return res.status(200).json({
@@ -30,7 +29,7 @@ const readFunc = async (req,res) => {
 }
 const createFunc = async (req,res) => {
     try {
-        let data = await userIpiService.createNewUser()
+        let data = await userIpiService.createNewUser(req.body)
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,//error code
@@ -47,7 +46,12 @@ const createFunc = async (req,res) => {
 }
 const updateFunc = async (req,res) => {
     try {
-        let users = await userIpiService.createUser()
+        let data = await userIpiService.updateFunc(req.body)
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,//error code
+            DT: data.DT
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).json({

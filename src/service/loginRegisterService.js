@@ -46,6 +46,7 @@ const registerNewUser = async (rawUserData) => {
     }
     //hash password
     let hashPassword = hashUserPassword(rawUserData.password)
+    
     //create new user
     await db.User.create({
         email:rawUserData.email,
@@ -109,5 +110,5 @@ const handleLogin = async (rawData) => {
     }
 }
 module.exports = {
-    registerNewUser, handleLogin
+    registerNewUser, handleLogin, hashUserPassword, checkEmailExist, checkPhoneExist
 }

@@ -2,7 +2,14 @@ import db from "../models"
 
 const getGroups = async () => {
     try {
-        let data = await db.Group.findAll()
+        let data = await db.Group.findAll({
+            order: [['name', 'DESC']]
+        })
+        return {
+            EM: 'get groups success',
+            EC: 0,
+            DT: data
+        }
     } catch (error) {
         console.log(error)
         return {
@@ -14,5 +21,5 @@ const getGroups = async () => {
 }
 
 module.exports = {
-    getGroups
+    getGroups   
 }

@@ -1,4 +1,5 @@
 import db from "../models/index";
+import {checkEmailExist, checkPhoneExist, hashUserPassword} from "./loginRegisterService"
 
 const getAllUser = async() => {
     try {
@@ -44,7 +45,10 @@ const getUserWithPagination = async (page, limit) => {
             limit: limit,
             attributes: {
                 exclude: ['password']
-            }
+            },
+            include: {model: db.Group, attributes:["name", "description", "id"]},
+            order: [['id', 'DESC']]
+
         });
         let totalPages = Math.ceil(count/limit)
         let data = {
@@ -66,11 +70,33 @@ const getUserWithPagination = async (page, limit) => {
     }
 }
 
-const createNewUser = async (data) => {
+const createNewUser = async (userData) => {
     try {
-        await db.User.create({
+        let isEmailExist = await checkEmailExist(userData.email)
+        if (isEmailExist) {
+            return {
+                EM: 'Email already exist',
+                EC: 1,
+                DT: 'email'
+            }
+        }
+        let isPhoneExist = await checkPhoneExist(userData.phone)
+        if (isPhoneExist) {
+            return {
+                EM: 'Phone already exist',
+                EC: 1,
+                DT: 'phone'
+            }
+        }
+        //hash password
+        let hashPassword = hashUserPassword(userData.password)
 
-        })
+        let data = await db.User.create({...userData, password: hashPassword})
+        return {
+            EM: 'create OK',
+            EC: 0,
+            DT: data
+        }
     } catch (error) {
         
     }
