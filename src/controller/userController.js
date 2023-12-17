@@ -46,7 +46,7 @@ const createFunc = async (req,res) => {
 }
 const updateFunc = async (req,res) => {
     try {
-        let data = await userIpiService.updateFunc(req.body)
+        let data = await userIpiService.updateUser(req.body)
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,//error code
