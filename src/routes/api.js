@@ -8,6 +8,11 @@ const router = express.Router();
  *
  * @param {*} app -express app
  */
+const testMiddleWare = (req,res,next) => {
+  console.log("middleware")
+  next()
+}
+
 const initApiRoutes = (app) => {
   //rest api
   //GET --R, POST --C, PUT-U, DELETE - D

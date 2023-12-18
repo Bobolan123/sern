@@ -41,9 +41,6 @@ const getUserList = async () => {
         raw: true,
         nest: true
     })
-    console.log(newUser)
-
-    console.log("new role",roles)
 
 
     let users = []

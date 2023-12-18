@@ -76,7 +76,6 @@ const checkPassword = (inputPassword, hashPassword) => {
 }
 const handleLogin = async (rawData) => {
     try {
-        console.log(rawData)
         let user = await db.User.findOne({
             where: {
                 [Op.or]: [
