@@ -93,7 +93,7 @@ const handleLogin = async (rawData) => {
                 let payload = {
                     email: user.email,
                     groupWithRoles,
-                    expresIn: process.env.JWT_EXPIRESIN
+                    username: user.username,
                 }
                 let token = createJWT(payload)
                 return {
@@ -101,7 +101,9 @@ const handleLogin = async (rawData) => {
                     EC: 0,
                     DT: {
                         access_token: token,
-                        groupWithRoles
+                        groupWithRoles,
+                        email: user.email,
+                        username: user.username
                     }
                 }
             }
